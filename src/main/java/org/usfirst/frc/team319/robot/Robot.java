@@ -55,7 +55,8 @@ public class Robot extends TimedRobot {
 	/*	Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Driver Left Trigger", Robot.oi.driverController.triggers.getLeft());
 		SmartDashboard.putNumber("Operator Left Stick Y", Robot.oi.operatorController.leftStick.getY());
-*/
+*/	
+		
 	}
 
 	@Override

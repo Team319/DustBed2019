@@ -15,7 +15,7 @@ public class DriveThenExtend extends CommandGroup {
    */
   public DriveThenExtend() {
 
-    addSequential(new LimelightDrive(2.3));
+    addSequential(new LimelightDrive(5.0));
     addSequential(new LimelightPistonExtend());
    
   }

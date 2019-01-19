@@ -15,14 +15,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LimelightDrive extends Command {
 
 	BobDriveHelper helper;
-	private double quickTurnThreshold = 0.2;
+	//private double quickTurnThreshold = 0.2;
 	//private double threshold = 2.3;
-	private double threshold;
-
+	public double threshold = 0.0;
+	
 	public LimelightDrive(double threshold) {
 
 		requires(Robot.drivetrain);
 		helper = new BobDriveHelper();
+		this.threshold = threshold;
 	
 	}
 
@@ -31,27 +32,24 @@ public class LimelightDrive extends Command {
 
 	protected void execute() {
 
-		double moveValue = Robot.limelight.track();
+		double moveValue = Robot.limelight.trackDrive();
 
 		double rotateValue = Robot.oi.driverController.rightStick.getX();
 
-		boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
-		DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, quickTurn, false);
+		//boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
+		DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, false, false);
 		Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
 
-	}
-
-	protected boolean isFinished() {
-		if (Robot.limelight.getArea() > threshold) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	protected void end() {
 	}
 
 	protected void interrupted() {
+	}
+
+	@Override
+	protected boolean isFinished() {
+		return false;
 	}
 }

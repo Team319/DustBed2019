@@ -23,7 +23,7 @@ public class OI {
 
 	public OI() {
 
-		driverController = new BobXboxController(0, 0.10, 0.08);
+		driverController = new BobXboxController(0, 0.20, 0.1);
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 		driverController.bButton.whileHeld(new VisionDrive());
@@ -32,6 +32,6 @@ public class OI {
 		driverController.startButton.whenPressed(new LimelightPistonRetract());
 		driverController.selectButton.whenPressed(new LimelightPistonExtend());
 
-
+	
 	}
 }

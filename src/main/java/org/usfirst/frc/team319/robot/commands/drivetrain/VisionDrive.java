@@ -9,6 +9,7 @@ import org.usfirst.frc.team319.utils.BobDriveHelper;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class VisionDrive extends Command {
 
 	BobDriveHelper helper;
-	private double quickTurnThreshold = 0.2;
+	//private double quickTurnThreshold = 3.0;
 
 	public VisionDrive() {
     requires(Robot.drivetrain);
@@ -24,23 +25,23 @@ public class VisionDrive extends Command {
 	}
 
 	protected void initialize() {
+		Robot.limelight.setSetpoints(3.0,0.0);
+		Robot.limelight.execute();
 	}
 
 	protected void execute() {
 
-    double x = Robot.limelight.getX();
-    	
-    double moveValue = Robot.limelight.track();
+	double moveValue = Robot.limelight.trackDrive();
+	double rotateValue = Robot.limelight.trackRotate();
 
-	double rotateValue = x * 0.03;
-	//double rotateValue = Robot.oi.driverController.rightStick.getX();
-    
+	SmartDashboard.putNumber("Rotate Value", rotateValue);
+	SmartDashboard.putNumber("Move Value", moveValue);
 
-   	boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
-		DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, quickTurn, false);
-		Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
-      
-    	
+
+	//boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
+	   
+	DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, false, false);
+	Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
 	}
 
 	protected boolean isFinished() {
