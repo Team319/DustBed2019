@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team319.robot.commands.LimelightCommands;
 
-import org.usfirst.frc.team319.robot.commands.drivetrain.VisionDrive;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class DriveThenExtend extends CommandGroup {
@@ -17,7 +15,7 @@ public class DriveThenExtend extends CommandGroup {
    */
   public DriveThenExtend() {
 
-    addSequential(new VisionDrive());
+    addSequential(new LimelightDrive(2.3));
     addSequential(new LimelightPistonExtend());
    
   }

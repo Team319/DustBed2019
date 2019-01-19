@@ -41,5 +41,9 @@ public class Pneumatics extends Subsystem {
 		this.limelightPiston.set(DoubleSolenoid.Value.kForward);
 
 	}
+	public void LimelightPistonRetract(){
+		this.limelightPiston.set(DoubleSolenoid.Value.kReverse);
+
+	}
 
 }

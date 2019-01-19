@@ -16,9 +16,6 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.ExternalFollower;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,7 +34,7 @@ public class Drivetrain extends Subsystem {
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollower);
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollower);
 
-	private CANSparkMax spark = new CANSparkMax(5, MotorType.kBrushless);
+	//private CANSparkMax spark = new CANSparkMax(5, MotorType.kBrushless);
 	
 
 

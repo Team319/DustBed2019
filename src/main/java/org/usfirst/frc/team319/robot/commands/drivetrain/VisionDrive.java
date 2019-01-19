@@ -32,8 +32,8 @@ public class VisionDrive extends Command {
     	
     double moveValue = Robot.limelight.track();
 
-// double rotateValue = x * 0.1;
-   double rotateValue = Robot.oi.driverController.rightStick.getX();
+	double rotateValue = x * 0.03;
+	//double rotateValue = Robot.oi.driverController.rightStick.getX();
     
 
    	boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
@@ -44,11 +44,7 @@ public class VisionDrive extends Command {
 	}
 
 	protected boolean isFinished() {
-		if(Robot.limelight.getArea() < 2.3){
-			return true;
-		}else{
-			return false;
-		}
+		return false;
 	}
 
 	protected void end() {

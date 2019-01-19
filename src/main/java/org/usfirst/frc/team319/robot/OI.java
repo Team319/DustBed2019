@@ -9,6 +9,8 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.commands.LimelightCommands.DriveThenExtend;
+import org.usfirst.frc.team319.robot.commands.LimelightCommands.LimelightPistonExtend;
+import org.usfirst.frc.team319.robot.commands.LimelightCommands.LimelightPistonRetract;
 import org.usfirst.frc.team319.robot.commands.drivetrain.VisionDrive;
 
 /**
@@ -25,7 +27,11 @@ public class OI {
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 		driverController.bButton.whileHeld(new VisionDrive());
-		driverController.xButton.whileHeld(new DriveThenExtend());
+		driverController.xButton.whenPressed(new DriveThenExtend());
+
+		driverController.startButton.whenPressed(new LimelightPistonRetract());
+		driverController.selectButton.whenPressed(new LimelightPistonExtend());
+
 
 	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
-import com.revrobotics.CANSparkMax;
 
 /**
  * @author BigBa
