@@ -5,19 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.drivetrain;
+package org.usfirst.frc.team319.robot.commands.sparkmax;
+
+import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SparkMaxForward extends Command {
-  public SparkMaxForward() {
+public class StopSparkMax extends Command {
+  public StopSparkMax() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+   requires(Robot.sparkmax);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.sparkmax.stopSparkMax();
+
   }
 
   // Called repeatedly when this Command is scheduled to run

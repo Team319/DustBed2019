@@ -17,24 +17,27 @@ public class LimelightDrive extends Command {
 	BobDriveHelper helper;
 	//private double quickTurnThreshold = 0.2;
 	//private double threshold = 2.3;
-	public double threshold = 0.0;
-	
-	public LimelightDrive(double threshold) {
+	public double finishedThreshold = 0.0;
+	public double area = Robot.limelight.getArea();
+
+
+	public LimelightDrive(double finishedThreshold) {
 
 		requires(Robot.drivetrain);
 		helper = new BobDriveHelper();
-		this.threshold = threshold;
+		this.finishedThreshold = finishedThreshold;
 	
 	}
 
 	protected void initialize() {
+		Robot.limelight.setSetpoints(5.0,0.0);
+		Robot.limelight.execute();
 	}
 
 	protected void execute() {
 
 		double moveValue = Robot.limelight.trackDrive();
-
-		double rotateValue = Robot.oi.driverController.rightStick.getX();
+		double rotateValue = Robot.limelight.trackRotate();
 
 		//boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
 		DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, false, false);
@@ -50,6 +53,11 @@ public class LimelightDrive extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		if (area >= 5.0){
+			return true;
+			
+		}else{
+			return false;
+		}
 	}
 }

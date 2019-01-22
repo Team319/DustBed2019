@@ -10,6 +10,7 @@ package org.usfirst.frc.team319.robot;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Limelight;
 import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team319.robot.subsystems.SparkMax;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static final Pneumatics pneumatics = new Pneumatics();
 	public static final Limelight limelight = new Limelight();
+	public static final SparkMax sparkmax = new SparkMax();
 
 	public static OI oi;
 
@@ -94,4 +96,5 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+
 }

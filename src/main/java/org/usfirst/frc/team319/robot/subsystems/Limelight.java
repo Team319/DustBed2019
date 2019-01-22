@@ -1,7 +1,5 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import java.awt.Robot;
-
 import org.usfirst.frc.team319.robot.commands.LimelightCommands.DriveToTarget;
 import org.usfirst.frc.team319.robot.commands.LimelightCommands.RotateToTarget;
 
@@ -18,6 +16,7 @@ public class Limelight {
    NetworkTableEntry tx = table.getEntry("tx");
    NetworkTableEntry ty = table.getEntry("ty");
    NetworkTableEntry ta = table.getEntry("ta");
+
 
    double moveValue = 0.0;
    double rotateValue = 0.0;
