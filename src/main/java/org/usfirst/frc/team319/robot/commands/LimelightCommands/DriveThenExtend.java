@@ -10,12 +10,14 @@ package org.usfirst.frc.team319.robot.commands.LimelightCommands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class DriveThenExtend extends CommandGroup {
+
   /**
    * Add your docs here.
    */
-  public DriveThenExtend() {
+  
+   public DriveThenExtend() {
 
-    addSequential(new LimelightDrive(5.0));
+    addSequential(new LimelightDrive(2.1,2.0));
     addSequential(new LimelightPistonExtend());
    
   }

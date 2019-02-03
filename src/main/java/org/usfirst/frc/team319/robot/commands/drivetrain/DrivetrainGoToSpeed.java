@@ -22,7 +22,7 @@ public class DrivetrainGoToSpeed extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.drivetrain.drive(ControlMode.Velocity, 2000, 2000);
+		Robot.drivetrain.drive(ControlMode.Velocity, 5000, 5000);
 		System.out.println("Left Error: " + Robot.drivetrain.getLeftClosedLoopError() + "Right Error: "
 				+ Robot.drivetrain.getRightClosedLoopError());
 	}

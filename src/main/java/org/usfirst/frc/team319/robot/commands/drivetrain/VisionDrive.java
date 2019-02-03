@@ -32,7 +32,9 @@ public class VisionDrive extends Command {
 	protected void execute() {
 
 	double moveValue = Robot.limelight.trackDrive();
-	double rotateValue = Robot.limelight.trackRotate();
+	//double moveValue = 0.0;
+	//double rotateValue = Robot.limelight.trackRotate();
+	double rotateValue = 0.0;
 
 	SmartDashboard.putNumber("Rotate Value", rotateValue);
 	SmartDashboard.putNumber("Move Value", moveValue);
@@ -40,7 +42,7 @@ public class VisionDrive extends Command {
 
 	//boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
 	   
-	DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, false, false);
+	DriveSignal driveSignal = helper.cheesyDrive(moveValue, rotateValue, true, false);
 	Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
 	}
 

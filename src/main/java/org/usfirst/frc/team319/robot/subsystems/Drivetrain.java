@@ -11,6 +11,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
+import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,21 +24,30 @@ public class Drivetrain extends Subsystem {
 
 	private boolean isHighGear = true;
 
+	public double rotationP = 0.07;
+	public double rotationI = 0.0;
+	public double rotationD = 0.07;
+	public double rotationF = 0.0;
+	public int rotationIZone = 30;
+
+	public static int LOW_GEAR_PROFILE = 0;
+	public static int ROTATION_PROFILE = 1;
+	
+	private SRXGains highGearGains = new SRXGains(LOW_GEAR_PROFILE, 0.2, 0.0, 0.3, 0.0, 0);
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, rotationP, rotationI, rotationD, rotationF,rotationIZone);
+
 	private BobTalonSRX leftFollower = new BobTalonSRX(2);
 	private BobTalonSRX rightFollower = new BobTalonSRX(4);
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, leftFollower);
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollower);
 
-	//private CANSparkMax spark = new CANSparkMax(5, MotorType.kBrushless);
-	
-
+	// private CANSparkMax spark = new CANSparkMax(5, MotorType.kBrushless);
 
 	private PigeonIMU pigeon = new PigeonIMU(rightFollower);
 
 	public Drivetrain() {
 
-	//	spark.follow(ExternalFollower.kFollowerPhoenix, 1);
-		
+		// spark.follow(ExternalFollower.kFollowerPhoenix, 1);
 
 		leftLead.setInverted(true);
 		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -55,7 +65,8 @@ public class Drivetrain extends Subsystem {
 		leftLead.configOpenloopRamp(0.0);
 		rightLead.configOpenloopRamp(0.0);
 
-		
+		configGains(highGearGains);
+		configGains(rotationGains);
 
 		setNeutralMode(NeutralMode.Coast);
 
@@ -70,7 +81,7 @@ public class Drivetrain extends Subsystem {
 		// Remote 1 will be a pigeon
 		rightLead.configRemoteSensor1(leftFollower.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
 		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (0.0 / 0.0)); // Coefficient for
-																									// Pigeon to
+																							// Pigeon to
 
 		// convert to 360
 		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
@@ -81,11 +92,10 @@ public class Drivetrain extends Subsystem {
 		setDefaultCommand(new BobDrive());
 	}
 
-
 	public void drive(ControlMode controlMode, double left, double right) {
 		this.leftLead.set(controlMode, left);
 		this.rightLead.set(controlMode, right);
-	} 
+	}
 
 	public void drive(ControlMode controlMode, DriveSignal driveSignal) {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
@@ -163,6 +173,10 @@ public class Drivetrain extends Subsystem {
 		return rightLead.getPrimarySensorVelocity();
 	}
 
+	public void configGains(SRXGains gains) {
+		this.leftLead.setGains(gains);
+		this.rightLead.setGains(gains);
+	}
 
 	@Override
 	public void periodic() {

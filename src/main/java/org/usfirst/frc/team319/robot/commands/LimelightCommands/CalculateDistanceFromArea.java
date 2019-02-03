@@ -9,17 +9,13 @@ package org.usfirst.frc.team319.robot.commands.LimelightCommands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveToTarget extends PIDCommand {
-
-  public DriveToTarget(double kP, double kI, double kD) {
-    super(kP, kI, kD);
-  }
-
-  @Override 
-  public void setSetpoint(double setpoint) {
-    super.setSetpoint(setpoint);
+public class CalculateDistanceFromArea extends Command {
+  public CalculateDistanceFromArea() {
+    // Use requires() here to declare subsystem dependencies
+    requires(Robot.limelight);
   }
 
   // Called just before this Command runs the first time
@@ -30,37 +26,26 @@ public class DriveToTarget extends PIDCommand {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.limelight.getDistanceBasedOnArea();
+    SmartDashboard.putNumber("Distance", Robot.limelight.getDistanceBasedOnArea());
+
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(( this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)){
-      return true;
-    }
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.limelight.stopRobot();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
-
-  @Override
-  protected double returnPIDInput() {
-    return Robot.limelight.getArea();
-  
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    Robot.limelight.trackPIDD(output);
   }
 }

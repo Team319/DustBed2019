@@ -15,7 +15,7 @@ public class Pneumatics extends Subsystem {
 	// public boolean isCollectorSolenoidExtended;
 
 	Compressor compressor = new Compressor(0);
-	
+
 	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
 	DoubleSolenoid limelightPiston = new DoubleSolenoid(0, 1);
 
@@ -37,11 +37,13 @@ public class Pneumatics extends Subsystem {
 		this.drivetrainShifter.set(DoubleSolenoid.Value.kReverse);
 		Robot.drivetrain.setIsHighGear(false);
 	}
-	public void limelightPistonExtend(){
+
+	public void limelightPistonExtend() {
 		this.limelightPiston.set(DoubleSolenoid.Value.kForward);
 
 	}
-	public void LimelightPistonRetract(){
+
+	public void LimelightPistonRetract() {
 		this.limelightPiston.set(DoubleSolenoid.Value.kReverse);
 
 	}

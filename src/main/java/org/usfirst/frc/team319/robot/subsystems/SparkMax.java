@@ -23,14 +23,15 @@ public class SparkMax extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-   setDefaultCommand(new StopSparkMax());
+    setDefaultCommand(new StopSparkMax());
   }
 
-  public void runSparkMax(double speed){
+  public void runSparkMax(double speed) {
     spark.set(speed);
 
   }
-  public void stopSparkMax(){
+
+  public void stopSparkMax() {
     spark.set(0.0);
 
   }

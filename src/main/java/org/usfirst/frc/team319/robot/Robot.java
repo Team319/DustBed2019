@@ -89,6 +89,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("x",Robot.limelight.getX());
 		SmartDashboard.putNumber("y",Robot.limelight.getY());
 		SmartDashboard.putNumber("area",Robot.limelight.getArea());
+		SmartDashboard.putNumber("Thor",Robot.limelight.getThor());
+		SmartDashboard.putNumber("Vert",Robot.limelight.getVert());
+		SmartDashboard.putNumber("hor",Robot.limelight.getVert());
+
 
 
 	}

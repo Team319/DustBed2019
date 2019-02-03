@@ -1,50 +1,58 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.robot.commands.LimelightCommands.DriveToTarget;
+import org.usfirst.frc.team319.robot.commands.LimelightCommands.DriveToTargetWithDistance;
 import org.usfirst.frc.team319.robot.commands.LimelightCommands.RotateToTarget;
+import org.usfirst.frc.team319.utils.BobCircularBuffer;
+import org.usfirst.frc.team319.utils.HelperFunctions;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- * Add your docs here.
- */
-public class Limelight {
+public class Limelight extends Subsystem {
+
+   private BobCircularBuffer limelightbuffer;
 
    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
    NetworkTableEntry tx = table.getEntry("tx");
    NetworkTableEntry ty = table.getEntry("ty");
    NetworkTableEntry ta = table.getEntry("ta");
-
+   NetworkTableEntry thor = table.getEntry("thor");
+   NetworkTableEntry tvert = table.getEntry("tvert");
+   NetworkTableEntry tv = table.getEntry("tv");
+   NetworkTableEntry ts = table.getEntry("ts");
+   NetworkTableEntry left = table.getEntry("hor");
 
    double moveValue = 0.0;
    double rotateValue = 0.0;
 
-   double kPD = 0.07;
+   double kPD = 0.2;
    double kID = 0.0;
-   double kDD = 0.09;//0.05
-   DriveToTarget pidD_ = new DriveToTarget(kPD, kID, kDD);
+   double kDD = 0.3;
+   DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
 
-   double kPR = 0.05;
+   double kPR = 0.07;
    double kIR = 0.0;
    double kDR = 0.07;
    RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
 
-   public void execute(){
+   public Limelight(){
+
+      this.limelightbuffer = new BobCircularBuffer(5);
+
+   }
+
+   public void execute() {
       pidD_.start();
       pidR_.start();
    }
 
-   public void setSetpoints(double drive_setpoint, double rotate_setpoint){
+   public void setSetpoints(double drive_setpoint, double rotate_setpoint) {
       pidD_.setSetpoint(drive_setpoint);
       pidR_.setSetpoint(rotate_setpoint);
    }
 
-   /*
-    * // read values periodically double x = tx.getDouble(0.0); double y =
-    * ty.getDouble(0.0); double area = ta.getDouble(0.0);
-    */
    public double getX() {
       return tx.getDouble(0.0);
    }
@@ -56,24 +64,61 @@ public class Limelight {
    public double getArea() {
       return ta.getDouble(0.0);
    }
+   public double getThor() {
+      return thor.getDouble(0.0);
+   }
 
-   public void trackPIDD(double output){
+   public double getVert() {
+      return tvert.getDouble(0.0);
+   }
+   public double getTv() {
+      return tv.getDouble(0.0);
+   }
+
+   public double getTs() {
+      return ts.getDouble(0.0);
+   }
+   public double getHor() {
+      return left.getDouble(0.0);
+   }
+
+   public double getDistance() {
+      double area = this.getArea();
+      double distance = Math.pow((area / 17.854), (1 / -2.272));
+      return distance;
+   }
+
+   public void trackPIDD(double output) {
       moveValue = -output;
    }
 
-   public void trackPIDR(double output){
+   public void trackPIDR(double output) {
       rotateValue = output;
    }
 
-   public void stopRobot(){
+   public void stopRobot() {
       moveValue = 0.0;
-     // rotateValue = 0.0;
    }
 
-   public double trackDrive(){
+   public double trackDrive() {
       return moveValue;
    }
-   public double trackRotate(){
+
+   public double trackRotate() {
       return rotateValue;
+   }
+
+   public double getDistanceBasedOnArea() {
+      return HelperFunctions.mean(limelightbuffer.toArray());
+
+   }
+
+   @Override
+   protected void initDefaultCommand() {
+   }
+
+   @Override
+   public void periodic() {
+      limelightbuffer.addLast(getDistance());
    }
 }

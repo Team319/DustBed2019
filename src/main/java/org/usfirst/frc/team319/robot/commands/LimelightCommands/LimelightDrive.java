@@ -19,23 +19,25 @@ public class LimelightDrive extends Command {
 	//private double threshold = 2.3;
 	public double finishedThreshold = 0.0;
 	public double area = Robot.limelight.getArea();
+	private double driveThreshold = 0.0;
 
 
-	public LimelightDrive(double finishedThreshold) {
+	public LimelightDrive(double finishedThreshold, double driveThreshold) {
 
 		requires(Robot.drivetrain);
 		helper = new BobDriveHelper();
 		this.finishedThreshold = finishedThreshold;
+		this.driveThreshold = driveThreshold;
 	
 	}
 
 	protected void initialize() {
-		Robot.limelight.setSetpoints(5.0,0.0);
+		Robot.limelight.setSetpoints(driveThreshold,0.0);
 		Robot.limelight.execute();
 	}
 
 	protected void execute() {
-
+		
 		double moveValue = Robot.limelight.trackDrive();
 		double rotateValue = Robot.limelight.trackRotate();
 
@@ -53,7 +55,7 @@ public class LimelightDrive extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (area >= 5.0){
+		if (area >= finishedThreshold){
 			return true;
 			
 		}else{
