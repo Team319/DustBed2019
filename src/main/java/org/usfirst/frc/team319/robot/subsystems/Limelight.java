@@ -22,7 +22,8 @@ public class Limelight extends Subsystem {
    NetworkTableEntry tvert = table.getEntry("tvert");
    NetworkTableEntry tv = table.getEntry("tv");
    NetworkTableEntry ts = table.getEntry("ts");
-   NetworkTableEntry left = table.getEntry("hor");
+   NetworkTableEntry tshort = table.getEntry("tshort");
+   NetworkTableEntry tlong = table.getEntry("tlong");
 
    double moveValue = 0.0;
    double rotateValue = 0.0;
@@ -78,14 +79,25 @@ public class Limelight extends Subsystem {
    public double getTs() {
       return ts.getDouble(0.0);
    }
-   public double getHor() {
-      return left.getDouble(0.0);
+   public double getTLong() {
+      return tlong.getDouble(0.0);
+   }
+   public double getTShort() {
+      return tshort.getDouble(0.0);
    }
 
    public double getDistance() {
       double area = this.getArea();
       double distance = Math.pow((area / 17.854), (1 / -2.272));
       return distance;
+   }
+   public double getAngle(){
+      double longshort = getTLong() / getTShort();
+      System.out.println(longshort);
+      double partone = 0.014;
+      double squareroot = 5893 - Math.sqrt(18686429-7300000*longshort);
+      double angle = partone*squareroot;
+      return angle;
    }
 
    public void trackPIDD(double output) {

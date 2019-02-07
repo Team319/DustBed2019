@@ -54,51 +54,48 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-	/*	Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Driver Left Trigger", Robot.oi.driverController.triggers.getLeft());
-		SmartDashboard.putNumber("Operator Left Stick Y", Robot.oi.operatorController.leftStick.getY());
-*/	
-		
+		/*
+		 * Scheduler.getInstance().run();
+		 * SmartDashboard.putNumber("Driver Left Trigger",
+		 * Robot.oi.driverController.triggers.getLeft());
+		 * SmartDashboard.putNumber("Operator Left Stick Y",
+		 * Robot.oi.operatorController.leftStick.getY());
+		 */
+
 	}
 
 	@Override
 	public void autonomousInit() {
 
-		}
+	}
 
-	
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
+
 	}
 
 	@Override
 	public void teleopInit() {
 
-		
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
 	}
 
-	 
 	@Override
 	public void teleopPeriodic() {
 
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("x",Robot.limelight.getX());
-		SmartDashboard.putNumber("y",Robot.limelight.getY());
-		SmartDashboard.putNumber("area",Robot.limelight.getArea());
-		SmartDashboard.putNumber("Thor",Robot.limelight.getThor());
-		SmartDashboard.putNumber("Vert",Robot.limelight.getVert());
-		SmartDashboard.putNumber("hor",Robot.limelight.getVert());
-
-
+		SmartDashboard.putNumber("x", Robot.limelight.getX());
+		SmartDashboard.putNumber("y", Robot.limelight.getY());
+		SmartDashboard.putNumber("area", Robot.limelight.getArea());
+		SmartDashboard.putNumber("Thor", Robot.limelight.getThor());
+		SmartDashboard.putNumber("Vert", Robot.limelight.getVert());
+		SmartDashboard.putNumber("angle", Robot.limelight.getAngle());
 
 	}
 
 	@Override
 	public void testPeriodic() {
 	}
-
 }
